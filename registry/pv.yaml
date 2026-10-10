@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-data-pv-0
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-hostpath
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /data/mysql/mysql-data-0
+    type: DirectoryOrCreate

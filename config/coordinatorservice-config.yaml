@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coordinatorservice-config
+  namespace: dev
+data:
+  SERVER_PORT: "8089"
+  SPRING_APPLICATION_NAME: "CoordinatorService"
+  LOGGING_LEVEL_COM_EXAMPLE_DEMO: "DEBUG"
+  TRANSACTION_SERVICE: "transactionservice.dev.svc.cluster.local"
+  ACCOUNT_SERVICE: "accountservice.dev.svc.cluster.local"

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactionservice-headless
+  namespace: dev
+spec:
+  clusterIP: None
+  selector:
+    app: transactionservice
+  ports:
+    - name: http
+      port: 8086
+      targetPort: 8086

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: registry-node-trust
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: registry-node-trust
+  template:
+    metadata:
+      labels:
+        app: registry-node-trust
+    spec:
+      hostNetwork: true
+      hostPID: true
+      containers:
+        - name: registry-node-trust
+          image: busybox:1.36
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              mkdir -p /host/etc/docker
+              cat > /host/etc/docker/daemon.json <<'EOF'
+              {
+                "insecure-registries": ["registry.dev.svc.cluster.local:5000"]
+              }
+              EOF
+              if command -v systemctl >/dev/null 2>&1; then
+                chroot /host /bin/sh -c 'systemctl restart docker || true' || true
+              fi
+              sleep 3600
+          volumeMounts:
+            - name: host-root
+              mountPath: /host
+              readOnly: false
+      volumes:
+        - name: host-root
+          hostPath:
+            path: /
+            type: Directory

@@ -1,0 +1,18 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /Users/user/mysql-data
+    containerPath: /data/mysql
+
+- role: worker
+  extraMounts:
+  - hostPath: /Users/user/mysql-data
+    containerPath: /data/mysql
+
+- role: worker
+  extraMounts:
+  - hostPath: /Users/user/mysql-data
+    containerPath: /data/mysql
